@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact } from './operations';
+import { fetchContacts, addContact, deleteTask, deleteContact } from './operations';
 
 const phonebookInitialState = {
   contacts: {
@@ -61,10 +61,20 @@ const phonebookSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = null;
       state.contacts.items = [...state.contacts.items, action.payload];
-    
     },
     [addContact.rejected]: handleRejected,
-  }
+
+    [deleteContact.pending]: handlePending,
+    [deleteContact.fulfilled](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = null;
+      const index = state.contacts.items.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      state.contacts.items.splice(index, 1);
+    },
+    [deleteContact.rejected]: handleRejected,
+  },
 });
 
 //  [fetchTasks.pending]: handlePending,
@@ -103,7 +113,7 @@ const phonebookSlice = createSlice({
 //     [toggleCompleted.rejected]: handleRejected,
 
 
-export const { deleteContact, setFilter } = phonebookSlice.actions;
+export const { setFilter } = phonebookSlice.actions;
 export const phonebookReducer = phonebookSlice.reducer;
 
 
