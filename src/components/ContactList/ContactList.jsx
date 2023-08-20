@@ -17,21 +17,21 @@ export function ContactList() {
   }
 const filterContactsData = filterContacts();
 
-  
+ 
 
 
     return (
       <ul className={CSS.contctList}>
         {filterContactsData.map(contact => {
-          return (
-            <ContactItem
-              name={contact.name}
-              number={contact.number}
-              key={contact.id}
-              id={contact.id}
-            />
-          );
-        })}
+               return (
+              <ContactItem
+                name={contact.name}
+                number={contact.number}
+                key={contact.id}
+                id={contact.id}
+              />
+            );
+          })}
       </ul>
     );
   }

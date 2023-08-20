@@ -2,8 +2,9 @@ import { useState } from "react";
 import css from './ContactForm.module.css'
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from "redux/contactsSlice"; 
+import { addContact } from "redux/operations";  
 import { getContacts } from 'redux/selectors';
+import { fetchContacts } from "redux/operations";
 
 
 export function ContactForm() {
@@ -44,8 +45,8 @@ export function ContactForm() {
 
   function onNoIdenticalContact() {
     
-    // onFormSubmit({ id: nanoid(), name, number });
-    dispatch(addContact({ id: nanoid(), name, number }));
+    dispatch(addContact({ name, number }));
+ 
     reset();
   }
 

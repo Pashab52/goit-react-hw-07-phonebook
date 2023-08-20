@@ -8,32 +8,61 @@
 li {
     text-align: center;
     display: flex;
-    width: 260px;
+    
     justify-content: space-between;
-    
-    
-    
-    
+     
 }
 
 ul {
+    width: 100%;
     display: flex;
     gap: 5px;
     flex-direction: column;
-
+overflow-x: auto;
 
 }
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+
 
 
 li p {
     padding-top: 3px;
     padding-left: 2px;
     border: 3px double white;
-    width: 220px;
+    width: 100%;
+    margin-right: 5px;
     text-align: start;
     border-radius: 2px;
     background-color: #f0f0f0;
     overflow: hidden;
-    word-break:break-all
+    word-break:break-all;
+    font-size: 15px;
+    font-weight: 400;
     
+}
+
+button {
+    padding: 3px 6px;
+    border-radius: 2px;
+    border: 3px double white;
+    font-weight: 600;
+    /* box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1); */
+    transition: border-radius 200ms linear, box-shadow 50ms linear;
+    /* margin-right: 5px; */
+
+}
+
+button:hover {
+    box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+
+
+}
+
+li button:hover {
+    border-radius: 50%;
+    box-shadow: none
 }

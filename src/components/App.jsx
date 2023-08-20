@@ -1,11 +1,13 @@
 import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
-
+import { Loader } from "./Loader/Loader";
 import css from './App.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { getContacts } from "redux/selectors";
+import { getContacts, getError, getIsLoading } from "redux/selectors";
+import { useEffect } from "react";
+import { fetchContacts } from "redux/operations";
 
 
 
@@ -13,7 +15,18 @@ import { getContacts } from "redux/selectors";
 export function App() {
 
   const contacts = useSelector(getContacts);
+   const isLoading = useSelector(getIsLoading);
+   const error = useSelector(getError);
+  const dispatch = useDispatch()
 
+// console.log(contacts)
+
+  
+  useEffect(() => {
+
+    dispatch(fetchContacts());
+
+  }, [dispatch]);
  
 
   return (
@@ -21,14 +34,11 @@ export function App() {
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
 
-      <Filter/>
+      <Filter />
 
       <h2>Contacts</h2>
-      {contacts.length > 0 && (
-        <ContactList
-    
-        />
-      )}
+      {error && <p>Contacts not found</p>}
+      {isLoading ? <Loader /> : <ContactList />}
     </div>
   );
 };
