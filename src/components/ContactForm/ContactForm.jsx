@@ -1,12 +1,11 @@
 import { useState } from "react";
-// import PropTypes from 'prop-types';
 import css from './ContactForm.module.css'
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from "redux/contactsSlice"; 
 import { getContacts } from 'redux/selectors';
 
-// export function ContactForm({ onFormSubmit, contacts }) {
+
 export function ContactForm() {
   
   const [name, setName] = useState('');
@@ -91,9 +90,3 @@ export function ContactForm() {
     );
   }
 
-
-// ContactForm.propTypes = {
-//     contacts: PropTypes.arrayOf(
-//       PropTypes.shape(PropTypes.string.isRequired).isRequired).isRequired,
-//     onFormSubmit: PropTypes.func.isRequired,
-//   };
