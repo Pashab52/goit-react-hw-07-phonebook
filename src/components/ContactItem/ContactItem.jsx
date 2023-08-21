@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import css from './ContactItem.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { deleteContact } from 'redux/operations'; 
+
 
 
 export function ContactItem (props) {
   const dispatch = useDispatch();
+
+  
   
     return (
       <li className={css.contactItem}>
@@ -14,10 +17,9 @@ export function ContactItem (props) {
         </p>
         <button
           type="button"
+          data-id={props.id}
           onClick={() => dispatch(deleteContact(props.id))}
-        >
-          X
-        </button>
+        >X</button>
       </li>
     );
   }

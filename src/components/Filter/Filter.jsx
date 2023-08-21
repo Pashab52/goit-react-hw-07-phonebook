@@ -27,6 +27,7 @@ const filterData = useSelector(getFilter)
         </label>
       </div>
     );
-  }
+}
+  
 
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteTask, deleteContact } from './operations';
+import { fetchContacts, addContact, deleteContact } from './operations';
 
 const phonebookInitialState = {
   contacts: {
@@ -27,22 +27,22 @@ const handleRejected = (state, action) => {
 const phonebookSlice = createSlice({
   name: 'phonebook',
   initialState: phonebookInitialState,
-  // reducers: {
-  //   addContact(state, action) {
-  //     // state.contacts.push(action.payload);
+  reducers: {
+    // addContact(state, action) {
+    //   // state.contacts.push(action.payload);
 
-  //     state.contacts.items = [...state.contacts.items, action.payload];
-  //   },
+    //   state.contacts.items = [...state.contacts.items, action.payload];
+    // },
 
-  //   deleteContact(state, action) {
-  //     state.contacts.items = state.contacts.items.filter(
-  //       contact => contact.id !== action.payload
-  //     );
-  //   },
-  //   setFilter(state, action) {
-  //     state.filter = action.payload;
-  //   },
-  // },
+    // deleteContact(state, action) {
+    //   state.contacts.items = state.contacts.items.filter(
+    //     contact => contact.id !== action.payload
+    //   );
+    // },
+    setFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: {
     [fetchContacts.pending]: handlePending,
     // [fetchContacts.fulfilled](state, action) {
@@ -55,12 +55,12 @@ const phonebookSlice = createSlice({
     },
     [fetchContacts.rejected]: handleRejected,
 
-    [addContact.pending]: handlePending,
+    // [addContact.pending]: handlePending,
 
     [addContact.fulfilled](state, action) {
-      state.contacts.isLoading = false;
+      // state.contacts.isLoading = false;
       state.contacts.error = null;
-      state.contacts.items = [...state.contacts.items, action.payload];
+      state.contacts.items = [action.payload,...state.contacts.items];
     },
     [addContact.rejected]: handleRejected,
 
@@ -77,40 +77,7 @@ const phonebookSlice = createSlice({
   },
 });
 
-//  [fetchTasks.pending]: handlePending,
-//     [fetchTasks.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       state.items = action.payload;
-//     },
-//     [fetchTasks.rejected]: handleRejected,
-//     [addTask.pending]: handlePending,
-//     [addTask.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       state.items.push(action.payload);
-//     },
-//     [addTask.rejected]: handleRejected,
-//     [deleteTask.pending]: handlePending,
-//     [deleteTask.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       const index = state.items.findIndex(
-//         task => task.id === action.payload.id
-//       );
-//       state.items.splice(index, 1);
-//     },
-//     [deleteTask.rejected]: handleRejected,
-//     [toggleCompleted.pending]: handlePending,
-//     [toggleCompleted.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       const index = state.items.findIndex(
-//         task => task.id === action.payload.id
-//       );
-//       state.items.splice(index, 1, action.payload);
-//     },
-//     [toggleCompleted.rejected]: handleRejected,
+
 
 
 export const { setFilter } = phonebookSlice.actions;

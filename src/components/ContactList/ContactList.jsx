@@ -24,13 +24,14 @@ const filterContactsData = filterContacts();
       <ul className={CSS.contctList}>
         {filterContactsData.map(contact => {
                return (
-              <ContactItem
-                name={contact.name}
-                number={contact.number}
-                key={contact.id}
-                id={contact.id}
-              />
-            );
+                 <ContactItem
+                   name={contact.name}
+                   number={contact.number}
+                   key={contact.id}
+                   id={contact.id}
+                   ids={contact.id}
+                 />
+               );
           })}
       </ul>
     );
