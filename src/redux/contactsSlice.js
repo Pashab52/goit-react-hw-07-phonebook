@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './operations';
 
 const phonebookInitialState = {
@@ -15,6 +15,8 @@ const phonebookInitialState = {
   filter: '',
 };
 
+ 
+
 const handlePending = state => {
   state.contacts.isLoading = true;
 };
@@ -24,64 +26,68 @@ const handleRejected = (state, action) => {
   state.contacts.error = action.payload;
 };
 
+const handleFulfilled = state => {
+  state.contacts.isLoading = false;
+  state.contacts.error = null;
+}
+
 const phonebookSlice = createSlice({
   name: 'phonebook',
   initialState: phonebookInitialState,
   reducers: {
-    // addContact(state, action) {
-    //   // state.contacts.push(action.payload);
-
-    //   state.contacts.items = [...state.contacts.items, action.payload];
-    // },
-
-    // deleteContact(state, action) {
-    //   state.contacts.items = state.contacts.items.filter(
-    //     contact => contact.id !== action.payload
-    //   );
-    // },
     setFilter(state, action) {
       state.filter = action.payload;
     },
   },
-  extraReducers: {
-    [fetchContacts.pending]: handlePending,
-    // [fetchContacts.fulfilled](state, action) {
-    //   state.contacts.items = [...state.contacts.items, ...action.payload];
-    // },
-    [fetchContacts.fulfilled](state, action) {
-      state.contacts.isLoading = false;
-      state.contacts.error = null;
-      state.contacts.items = [...action.payload];
-    },
-    [fetchContacts.rejected]: handleRejected,
 
-    // [addContact.pending]: handlePending,
+ 
 
-    [addContact.fulfilled](state, action) {
-      // state.contacts.isLoading = false;
-      state.contacts.error = null;
-      state.contacts.items = [action.payload,...state.contacts.items];
-    },
-    [addContact.rejected]: handleRejected,
+  extraReducers: builder =>
+  {
+    builder
+      // .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        handleFulfilled(state);
+        state.contacts.items = [...action.payload];
+      })
+      // .addCase(fetchContacts.rejected, handleRejected)
 
-    [deleteContact.pending]: handlePending,
-    [deleteContact.fulfilled](state, action) {
-      state.contacts.isLoading = false;
-      state.contacts.error = null;
-      const index = state.contacts.items.findIndex(
-        contact => contact.id === action.payload.id
+      // .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, action) => {
+        handleFulfilled(state);
+        state.contacts.items = [action.payload, ...state.contacts.items];
+      })
+      // .addCase(addContact.rejected, handleRejected)
+
+      // .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        handleFulfilled(state);
+        const index = state.contacts.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        state.contacts.items.splice(index, 1);
+      })
+      // .addCase(deleteContact.rejected, handleRejected)
+
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.pending,
+          addContact.pending,
+          deleteContact.pending
+        ),
+        handlePending
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.rejected,
+          addContact.rejected,
+          deleteContact.rejected
+        ),
+        handleRejected
       );
-      state.contacts.items.splice(index, 1);
-    },
-    [deleteContact.rejected]: handleRejected,
   },
 });
 
-
-
-
 export const { setFilter } = phonebookSlice.actions;
 export const phonebookReducer = phonebookSlice.reducer;
-
-
 

@@ -23,7 +23,18 @@
     color: white;
     text-shadow: 0px 2px 3px #666,
     1px 1px 1px silver,
-        -1px 1px 1px silver;
-    
-            
+        -1px 1px 1px silver;   
+       
+}
+
+
+
+.contactsTitleWrap{
+display: flex;
+
+width: 130px;
+
+}
+.contactsTitle{
+    text-align: center;
 }
