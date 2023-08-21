@@ -3,12 +3,13 @@ import { fetchContacts, addContact, deleteContact } from './operations';
 
 const phonebookInitialState = {
   contacts: {
-   items: [
+    items: [
+      // Не виходить додавати в InitialState початковий масив контактів. Йде подвійний запит на сервер, і викидує помилку про однакові ключі при рендері. Ніяк не розібрався із тим(((
       // { id: 'id-1d', name: 'Rosie Simpson', number: '459-12-56' },
       // { id: 'id-2d', name: 'Hermione Kline', number: '443-89-12' },
       // { id: 'id-3d', name: 'Eden Clements', number: '645-17-79' },
       // { id: 'id-4d', name: 'Annie Copeland', number: '227-91-26' },
-  ],
+    ],
     isLoading: false,
     error: null,
   },
@@ -48,6 +49,11 @@ const phonebookSlice = createSlice({
       // .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
         handleFulfilled(state);
+
+
+        // Не виходить додавати в InitialState початковий масив контактів. Йде подвійний запит на сервер, і викидує помилку про однакові ключі при рендері. Ніяк не розібрався із тим(((
+        // state.contacts.items = [...state.contacts.items, ...action.payload];
+
         state.contacts.items = [...action.payload];
       })
       // .addCase(fetchContacts.rejected, handleRejected)
